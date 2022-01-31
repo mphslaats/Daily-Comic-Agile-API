@@ -4,13 +4,6 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const nunjucks = require('nunjucks');
 
-const today = new Date();
-const year = today.getFullYear();
-let month = today.getMonth() + 1
-month = month < 10 ? `0${month}`: month;
-let day = today.getDate();
-day = day < 10 ? `0${day}`: day;
-const date = `${year}-${month}-${day}`;
 const url = `https://www.comicagile.net/`
 
 
@@ -29,24 +22,29 @@ app.use((req, res, next) => {
 });
 
 
-app.get('/', (req, res) => {
-  axios.get(url).then(response => {
-    const $ = cheerio.load(response.data);
-    const comicTitle = $('#spliced-comic').find('h2').text();
-    const comicUrl = ('#spliced-comic').find('img').attr('src');
-    res.render('index.html', {
-      "title": comicTitle,
-      "image": `${comicUrl}.png`
-    });
-  }).catch(error => res.json(error));
-});
+// app.get('/', (req, res) => {
+//   axios.get(url).then(response => {
+//     const $ = cheerio.load(response.data);
+//     console.log('ola');
+//     const comicTitle = $('#spliced-comic').find('h2').text();
+//     console.log(comicTitle);
+//     const comicUrl = $('#spliced-comic').find('img').attr('src');
+//     console.log(comicUrl);
+//     res.render('index.html', {
+//       "title": comicTitle,
+//       "image": `${comicUrl}.png`
+//     });
+//   }).catch(error => res.json(error));
+// });
 
 
 app.get('/json', (req, res) => {
   axios.get(url).then(response => {
     const $ = cheerio.load(response.data);
+    console.log('ola');
     const comicTitle = $('#spliced-comic').find('h2').text();
-    const comicUrl = ('#spliced-comic').find('img').attr('src');
+    console.log(comicTitle);
+    const comicUrl = $('#spliced-comic').find('img').attr('src');
     const jsonResponse = {
       "title": comicTitle,
       "image": `${comicUrl}.png`,
