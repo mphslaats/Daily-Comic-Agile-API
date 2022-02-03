@@ -22,21 +22,24 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  axios.get(url).then(response => {
-    const $ = cheerio.load(response.data);
-    console.log('ola');
-    const comicTitle = $('#spliced-comic').find('h2').text();
-    console.log(comicTitle);
-    const comicUrl = $('#spliced-comic').find('img').attr('src');
-    console.log(comicUrl);
-    const comicText = $("#spliced-comic").find("p").text();
-    res.render('index.html', {
-      "title": comicTitle,
+app.get("/", (req, res) => {
+  axios
+    .get(url)
+    .then((response) => {
+      const $ = cheerio.load(response.data);
+      const comic = $("#spliced-comic")
+      
+      const comicTitle = comic.find("h2").text();
+      const comicUrl = comic.find("img").attr("src");
+      const comicText = comic.find("p").text();
+    
+      res.render("index.html", {
+        title: comicTitle,
         image: comicUrl,
-        text: comicText
-    });
-  }).catch(error => res.json(error));
+        text: comicText,
+      });
+    })
+    .catch((error) => res.json(error));
 });
 
 app.get("/json", (req, res) => {
@@ -44,15 +47,16 @@ app.get("/json", (req, res) => {
     .get(url)
     .then((response) => {
       const $ = cheerio.load(response.data);
-      console.log("ola");
+      const comic = $("#spliced-comic")
+      
       const comicTitle = $("#spliced-comic").find("h2").text();
-      console.log(comicTitle);
       const comicUrl = $("#spliced-comic").find("img").attr("src");
       const comicText = $("#spliced-comic").find("p").text();
+    
       const jsonResponse = {
         title: comicTitle,
         image: comicUrl,
-        text: comicText
+        text: comicText,
       };
       res.json(jsonResponse);
     })
