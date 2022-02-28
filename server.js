@@ -4,7 +4,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const nunjucks = require("nunjucks");
 
-const url = `https://www.comicagile.net/`;
+const url = "https://www.comicagile.net";
 
 nunjucks.configure("views", {
   autoescape: true,
@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
     .get(url)
     .then((response) => {
       const $ = cheerio.load(response.data);
-      const comic = $("#spliced-comic")
+      const comic = $("#spliced-comic");
       
       const comicTitle = comic.find("h2").text();
       const comicUrl = comic.find("img").attr("src");
@@ -47,11 +47,11 @@ app.get("/json", (req, res) => {
     .get(url)
     .then((response) => {
       const $ = cheerio.load(response.data);
-      const comic = $("#spliced-comic")
+      const comic = $("#spliced-comic");
       
-      const comicTitle = $("#spliced-comic").find("h2").text();
-      const comicUrl = $("#spliced-comic").find("img").attr("src");
-      const comicText = $("#spliced-comic").find("p").text();
+      const comicTitle = comic.find("h2").text();
+      const comicUrl = comic.find("img").attr("src");
+      const comicText = comic.find("p").text();
     
       const jsonResponse = {
         title: comicTitle,
@@ -65,14 +65,14 @@ app.get("/json", (req, res) => {
 
 app.get("/search", (req, res) => {
   axios
-    .get(url + "comic/" + req.query.q)
+    .get(`${url}/comic/${req.query.q}`)
     .then((response) => {
       const $ = cheerio.load(response.data);
-      const comic = $("#spliced-comic")
+      const comic = $("#spliced-comic");
       
-      const comicTitle = $("#spliced-comic").find("h2").text();
-      const comicUrl = $("#spliced-comic").find("img").attr("src");
-      const comicText = $("#spliced-comic").find("p").text();
+      const comicTitle = comic.find("h2").text();
+      const comicUrl = comic.find("img").attr("src");
+      const comicText = comic.find("p").text();
     
       const jsonResponse = {
         title: comicTitle,
