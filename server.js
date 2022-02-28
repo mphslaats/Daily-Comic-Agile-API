@@ -65,7 +65,7 @@ app.get("/json", (req, res) => {
 
 app.get("/search", (req, res) => {
   axios
-    .get(url)
+    .get(url + "comic/" + req.query.q)
     .then((response) => {
       const $ = cheerio.load(response.data);
       const comic = $("#spliced-comic")
