@@ -7,12 +7,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "fastify": "^3.27.2",
-    "fastify-formbody": "^5.2.0",
-    "fastify-static": "^4.5.0",
-    "handlebars": "^4.7.7",
-    "point-of-view": "^5.1.0",
-    
     "express": "^4.17.3",
     "axios": "^0.26.0",
     "cheerio": "^0.22.0",
